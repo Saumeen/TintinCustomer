@@ -138,7 +138,7 @@ public class VerifyActivity extends AppCompatActivity {
                             QuerySnapshot qs = task.getResult();
                             if(qs.isEmpty()){
                                 addAccount(firebaseUser);
-                                Intent intent = new Intent(VerifyActivity.this, MapsActivity.class);
+                                Intent intent = new Intent(VerifyActivity.this, DetailsActivity.class);
                                 // intent.putExtra("user",firebaseUser);
 
                                 startActivity(intent);

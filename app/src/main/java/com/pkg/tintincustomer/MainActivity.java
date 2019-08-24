@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity
     //FirebaseHomeRecyclerViewAdapter firebaseHomeRecyclerViewAdapter;
     HomeRecyclerViewAdapter adapter;
     private Spinner searchspin;
-    String[] citydata={"Godhra","Nadiad","Vadodara","Ahmedabad","Gandhinagar","Surat","Anand"};
+    String[] citydata={"Nadiad","Godhra","Vadodara","Ahmedabad","Gandhinagar","Surat","Anand"};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
