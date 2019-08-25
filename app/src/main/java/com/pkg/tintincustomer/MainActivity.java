@@ -2,6 +2,7 @@ package com.pkg.tintincustomer;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.os.Bundle;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -10,6 +11,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
+import android.text.Html;
 import android.util.Log;
 import android.view.View;
 
@@ -24,6 +26,7 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -43,6 +46,7 @@ import android.view.Menu;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -58,8 +62,9 @@ public class MainActivity extends AppCompatActivity
     private ArrayList<MenuDataModel> menuDataModelArrayList;
     private RecyclerView recycler_view;
     //FirebaseHomeRecyclerViewAdapter firebaseHomeRecyclerViewAdapter;
-    HomeRecyclerViewAdapter adapter;
+    private HomeRecyclerViewAdapter adapter;
     private Spinner searchspin;
+    private TextView navaddress;
     String[] citydata={"Nadiad","Godhra","Vadodara","Ahmedabad","Gandhinagar","Surat","Anand"};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,6 +98,7 @@ public class MainActivity extends AppCompatActivity
         layoutauthentication();
         addItemOnSpinner();
         //fatchMenuData();
+        loadNavbarData();
 
         searchspin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -104,6 +110,45 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
                 Toast.makeText(getApplicationContext(),"Select the City",Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    private void loadNavbarData() {
+        db.collection("CustomerUsers").whereEqualTo("PhoneNo",firebaseUser.getPhoneNumber()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                for(DocumentSnapshot documentSnapshot:task.getResult().getDocuments()){
+                    getDetailsOfCustomer(documentSnapshot.getId());
+                }
+            }
+
+            private void getDetailsOfCustomer(String id) {
+                db.collection("CustomerUsers").document(id).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        DocumentSnapshot documentSnapshot = task.getResult();
+
+                        navaddress = findViewById(R.id.nav_address1);
+                        navaddress.setText(String.format(getString(R.string.Change))
+                                +documentSnapshot.getString("HomeNo")+","+documentSnapshot.getString("LandMark")+","
+                                +documentSnapshot.getString("City")+","
+                        +documentSnapshot.getString("State"));
+                       navaddress.setPaintFlags(navaddress.getPaintFlags()| Paint.UNDERLINE_TEXT_FLAG);
+                        navaddress.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent intent =new Intent(MainActivity.this,MapsActivity.class);
+                                startActivity(intent);
+                            }
+                        });
+                    }
+                });
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(getApplicationContext(),"Something Wrong",Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -142,6 +187,7 @@ public class MainActivity extends AppCompatActivity
                 Log.d("MainActivity--",task.getResult().getDocuments()+""+firebaseUser.getPhoneNumber());
                 for(DocumentSnapshot documentSnapshot:task.getResult().getDocuments()){
                         loadData(documentSnapshot.getId(),documentSnapshot.getString("Name")
+
                         );
                 }
 
