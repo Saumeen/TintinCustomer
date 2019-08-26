@@ -38,7 +38,7 @@
         android:layout_gravity="bottom"
         app:backgroundTint="@color/colorPrimary"
         app:buttonGravity="bottom|top"
-        app:fabAlignmentMode="center"
+        app:fabAlignmentMode="end"
         app:navigationIcon="@drawable/ic_arrow_back"/>
 
 
@@ -50,5 +50,8 @@
         app:backgroundTint="@color/colorAccent"
         app:fabSize="normal"
         app:layout_anchor="@id/toolbar_cart" />
+
+
+
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -4,9 +4,11 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -25,15 +27,15 @@ import java.util.List;
 import java.util.Map;
 
 public class MenuDataListViewAdapter extends RecyclerView.Adapter<MenuDataListViewHolder> {
-    private MenuDataListActivity menuDataListActivity;
+
     private ArrayList<MenuDataModel> dataModelArrayList;
     private FirebaseAuth firebaseAuth;
     private FirebaseUser firebaseUser;
     private FirebaseFirestore db;
     private Map<String,Object> datamap;
 
-    public MenuDataListViewAdapter(MenuDataListActivity menuDataListActivity, ArrayList<MenuDataModel> dataModelArrayList) {
-        this.menuDataListActivity = menuDataListActivity;
+    public MenuDataListViewAdapter(ArrayList<MenuDataModel> dataModelArrayList) {
+
         this.dataModelArrayList = dataModelArrayList;
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser = firebaseAuth.getCurrentUser();
@@ -44,7 +46,7 @@ public class MenuDataListViewAdapter extends RecyclerView.Adapter<MenuDataListVi
     @NonNull
     @Override
     public MenuDataListViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        LayoutInflater layoutInflater =LayoutInflater.from(menuDataListActivity.getBaseContext());
+        LayoutInflater layoutInflater =LayoutInflater.from(parent.getContext());
         View view = layoutInflater.inflate(R.layout.menudata_card,parent,false);
         return new MenuDataListViewHolder(view);
     }
@@ -109,4 +111,5 @@ public class MenuDataListViewAdapter extends RecyclerView.Adapter<MenuDataListVi
     public int getItemCount() {
         return dataModelArrayList.size();
     }
-}
+
+    }
