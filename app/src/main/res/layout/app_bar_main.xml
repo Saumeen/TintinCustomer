@@ -6,28 +6,57 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <com.google.android.material.appbar.AppBarLayout
+    <!--<com.google.android.material.appbar.AppBarLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:theme="@style/AppTheme.AppBarOverlay">-->
+
+        <!--&lt;!&ndash;<androidx.appcompat.widget.Toolbar&ndash;&gt;-->
+            <!--&lt;!&ndash;android:id="@+id/toolbar"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:layout_width="match_parent"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:layout_height="?attr/actionBarSize"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:background="?attr/colorPrimary"&ndash;&gt;-->
+            <!--&lt;!&ndash;app:popupTheme="@style/AppTheme.PopupOverlay" />&ndash;&gt;-->
+        <!---->
+
+    <!--</com.google.android.material.appbar.AppBarLayout>-->
+
+    <com.google.android.material.bottomappbar.BottomAppBar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
+        android:layout_height="?actionBarSize"
+        android:layout_gravity="bottom"
+        app:backgroundTint="@color/colorPrimary"
+        app:buttonGravity="bottom|top"
+        app:fabAlignmentMode="center"
+        app:navigationIcon="@drawable/ic_menu"/>
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
-
-    </com.google.android.material.appbar.AppBarLayout>
-
-    <include layout="@layout/content_main" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@android:drawable/ic_dialog_email" />
+        android:src="@drawable/ic_search_black_24dp"
+        app:backgroundTint="@color/colorAccent"
+        app:fabSize="normal"
+        app:layout_anchor="@id/toolbar" />
+    <!--<android.support.design.widget.FloatingActionButton-->
+        <!--android:id="@+id/fab"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:src="@drawable/ic_search_black_24dp"-->
+        <!--app:backgroundTint="@color/colorAccent"-->
+        <!--app:fabSize="normal"-->
+        <!--app:layout_anchor="@id/toolbar" />-->
+
+    <include layout="@layout/content_main" />
+
+    <!--<com.google.android.material.floatingactionbutton.FloatingActionButton-->
+        <!--android:id="@+id/fab"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_gravity="bottom|end"-->
+        <!--android:layout_margin="@dimen/fab_margin"-->
+        <!--app:srcCompat="@android:drawable/ic_dialog_email" />-->
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
