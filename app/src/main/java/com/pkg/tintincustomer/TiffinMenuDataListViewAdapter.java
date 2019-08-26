@@ -1,14 +1,11 @@
 package com.pkg.tintincustomer;
 
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -26,7 +23,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class MenuDataListViewAdapter extends RecyclerView.Adapter<MenuDataListViewHolder> {
+public class TiffinMenuDataListViewAdapter extends RecyclerView.Adapter<MenuDataListViewHolder> {
 
     private ArrayList<MenuDataModel> dataModelArrayList;
     private FirebaseAuth firebaseAuth;
@@ -34,7 +31,7 @@ public class MenuDataListViewAdapter extends RecyclerView.Adapter<MenuDataListVi
     private FirebaseFirestore db;
     private Map<String,Object> datamap;
 
-    public MenuDataListViewAdapter(ArrayList<MenuDataModel> dataModelArrayList) {
+    public TiffinMenuDataListViewAdapter(ArrayList<MenuDataModel> dataModelArrayList) {
 
         this.dataModelArrayList = dataModelArrayList;
         firebaseAuth = FirebaseAuth.getInstance();
@@ -47,7 +44,7 @@ public class MenuDataListViewAdapter extends RecyclerView.Adapter<MenuDataListVi
     @Override
     public MenuDataListViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater =LayoutInflater.from(parent.getContext());
-        View view = layoutInflater.inflate(R.layout.menudata_card,parent,false);
+        View view = layoutInflater.inflate(R.layout.tiffinmenudata_card,parent,false);
         return new MenuDataListViewHolder(view);
     }
 
@@ -60,11 +57,6 @@ public class MenuDataListViewAdapter extends RecyclerView.Adapter<MenuDataListVi
             @Override
             public void onClick(View v) {
                 addToCartData(v,position);
-//
-//                Intent intent = new Intent(v.getContext(),CartOrderActivity.class);
-//                intent.putExtra("MenuData",dataModelArrayList);
-//                intent.putExtra("Position",position);
-//                v.getContext().startActivity(intent);
             }
         });
     }

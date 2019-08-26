@@ -17,6 +17,7 @@ public class MenuDataListViewHolder extends RecyclerView.ViewHolder {
         view = itemView;
         addmenudata = view.findViewById(R.id.menudatacard_add);
         removecartdata =view.findViewById(R.id.menudatacard_remove);
+
     }
 
     public void setType(String type){
