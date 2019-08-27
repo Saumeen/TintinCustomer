@@ -1,7 +1,5 @@
 package com.pkg.tintincustomer;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -27,8 +25,6 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.firebase.ui.auth.AuthUI.getApplicationContext;
-
 
 public class HomeMenuFragment extends Fragment {
     public RecyclerView recyclerView;
@@ -36,7 +32,7 @@ public class HomeMenuFragment extends Fragment {
     private FirebaseUser firebaseUser;
     private FirebaseFirestore db;
     private ArrayList<MenuDataModel> dataModelArrayList;
-    private MenuDataListViewAdapter adapter;
+    private HomeMenuDataListAdapter adapter;
     private Bundle bundle;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup viewGroup, Bundle savedInstanceState){
@@ -84,7 +80,7 @@ public class HomeMenuFragment extends Fragment {
                                             dataModelArrayList.add(menuDataModel);
 
                                         }
-                                        adapter = new MenuDataListViewAdapter( dataModelArrayList);
+                                        adapter = new HomeMenuDataListAdapter(dataModelArrayList,bundle);
                                         recyclerView.setAdapter(adapter);
 
                                     }
@@ -115,7 +111,7 @@ public class HomeMenuFragment extends Fragment {
                                             dataModelArrayList.add(menuDataModel);
 
                                         }
-                                        adapter = new MenuDataListViewAdapter( dataModelArrayList);
+                                        adapter = new HomeMenuDataListAdapter(dataModelArrayList,bundle);
                                         recyclerView.setAdapter(adapter);
 
                                     }

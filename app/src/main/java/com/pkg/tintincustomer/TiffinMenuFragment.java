@@ -1,7 +1,5 @@
 package com.pkg.tintincustomer;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -28,8 +26,6 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.firebase.ui.auth.AuthUI.getApplicationContext;
-
 
 public class TiffinMenuFragment  extends Fragment {
     public RecyclerView recyclerView;
@@ -37,7 +33,7 @@ public class TiffinMenuFragment  extends Fragment {
     private FirebaseUser firebaseUser;
     private FirebaseFirestore db;
     private ArrayList<MenuDataModel> dataModelArrayList;
-    private MenuDataListViewAdapter adapter;
+    private TiffinMenuDataListViewAdapter adapter;
     private Bundle bundle;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup viewGroup, Bundle savedInstanceState){
@@ -87,7 +83,7 @@ public class TiffinMenuFragment  extends Fragment {
                                             dataModelArrayList.add(menuDataModel);
 
                                         }
-                                        adapter = new MenuDataListViewAdapter( dataModelArrayList);
+                                        adapter = new TiffinMenuDataListViewAdapter( dataModelArrayList);
                                         recyclerView.setAdapter(adapter);
 
                                     }
@@ -118,7 +114,7 @@ public class TiffinMenuFragment  extends Fragment {
                                             dataModelArrayList.add(menuDataModel);
 
                                         }
-                                        adapter = new MenuDataListViewAdapter(dataModelArrayList);
+                                        adapter = new TiffinMenuDataListViewAdapter(dataModelArrayList);
                                         recyclerView.setAdapter(adapter);
 
                                     }
