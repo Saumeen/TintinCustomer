@@ -39,6 +39,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.Menu;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -57,6 +58,10 @@ public class MainActivity extends AppCompatActivity
     private HomeRecyclerViewAdapter adapter;
     private Spinner searchspin;
     private TextView navaddress;
+    private TextView user_name;
+    private TextView user_email;
+    private ImageView user_photo;
+    private View header;
     String[] citydata={"Nadiad","Godhra","Vadodara","Ahmedabad","Gandhinagar","Surat","Anand"};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,19 +79,27 @@ public class MainActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                Snackbar.make(view, "Replace with your own action1", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
         });
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
+        header = navigationView.getHeaderView(0);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
         searchspin = findViewById(R.id.searchspiner);
-
+        user_email = header.findViewById(R.id.user_email);
+        user_name = header.findViewById(R.id.user_name);
+        user_photo = header.findViewById(R.id.user_photo);
+        firebaseAuth = FirebaseAuth.getInstance();
+        firebaseUser = firebaseAuth.getCurrentUser();
+        Log.d("Header Data","User name");
+        user_name.setText(firebaseUser.getDisplayName());
+        user_email.setText(firebaseUser.getEmail());
         authentication();
         layoutauthentication();
         addItemOnSpinner();
@@ -148,8 +161,8 @@ public class MainActivity extends AppCompatActivity
 
     private void addItemOnSpinner() {
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_spinner_item, citydata);
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                R.layout.spinner_text, citydata);
+        dataAdapter.setDropDownViewResource(R.layout.spinner_text);
         searchspin.setAdapter(dataAdapter);
         Toast.makeText(getApplicationContext(),String.valueOf(searchspin.getSelectedItem()),Toast.LENGTH_LONG).show();
 
@@ -169,6 +182,9 @@ public class MainActivity extends AppCompatActivity
     private void authentication() {
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser = firebaseAuth.getCurrentUser();
+        Log.d("Header Data","User name"+firebaseUser.getDisplayName());
+        user_name.setText(firebaseUser.getDisplayName());
+        user_email.setText(firebaseUser.getEmail());
         db = FirebaseFirestore.getInstance();
     }
 

@@ -6,7 +6,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="10dp"
+    android:padding="0dp"
 
     >
     <androidx.cardview.widget.CardView
@@ -14,15 +14,18 @@
         android:layout_gravity="top"
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        android:layout_margin="5dp"
-        card_view:cardBackgroundColor="@color/fui_bgPhone"
-        card_view:cardCornerRadius="6dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        card_view:cardBackgroundColor="@color/colorCard"
+        card_view:cardCornerRadius="3dp"
 
        >
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingLeft="7dp">
+            android:paddingLeft="0dp">
             <TextView
                 android:id="@+id/homecard_suppliername"
                 android:layout_width="match_parent"
@@ -30,8 +33,9 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
-                android:layout_marginStart="0dp"
-                android:layout_marginTop="15dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/colorTextBlack"
                 android:hint="Supplier Name" />
 
             <TextView
@@ -41,10 +45,10 @@
                 android:layout_height="22dp"
                 android:layout_below="@+id/homecard_suppliername"
                 android:layout_alignParentStart="true"
+                android:textColor="@color/colorTextBlack"
                 android:layout_alignParentBottom="true"
-                android:layout_marginStart="0dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="16dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
                 android:hint="Address" />
 
 
