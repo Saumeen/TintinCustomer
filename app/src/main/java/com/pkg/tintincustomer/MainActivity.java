@@ -98,8 +98,8 @@ public class MainActivity extends AppCompatActivity
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser = firebaseAuth.getCurrentUser();
         Log.d("Header Data","User name");
-        user_name.setText(firebaseUser.getDisplayName());
-        user_email.setText(firebaseUser.getEmail());
+//        user_name.setText(firebaseUser.getDisplayName());
+//        user_email.setText(firebaseUser.getEmail());
         authentication();
         layoutauthentication();
         addItemOnSpinner();
@@ -134,7 +134,8 @@ public class MainActivity extends AppCompatActivity
                     @Override
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                         DocumentSnapshot documentSnapshot = task.getResult();
-
+                        user_name.setText(documentSnapshot.getString("Name"));
+                        user_email.setText(documentSnapshot.getString("PhoneNo"));
                         navaddress = findViewById(R.id.nav_address1);
                         navaddress.setText(String.format(getString(R.string.Change))
                                 +documentSnapshot.getString("HomeNo")+","+documentSnapshot.getString("LandMark")+","
