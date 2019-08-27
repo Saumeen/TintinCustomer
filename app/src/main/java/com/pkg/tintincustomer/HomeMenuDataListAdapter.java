@@ -3,6 +3,7 @@ package com.pkg.tintincustomer;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,10 +34,11 @@ public class HomeMenuDataListAdapter extends RecyclerView.Adapter<HomeMenuDataLi
     private FirebaseAuth firebaseAuth;
     private FirebaseUser firebaseUser;
     private FirebaseFirestore db;
-    private Map<String,Object> datamap;
+    private Map<String,Object> datamap,datamap2;
     private Bundle bundle;
     private View view;
-    private String custname,custphoneno;
+    private String custphoneno,custname;
+    boolean flag=false;
 
     public HomeMenuDataListAdapter(ArrayList<MenuDataModel> dataModelArrayList, Bundle bundle) {
         this.bundle=bundle;
@@ -45,6 +47,8 @@ public class HomeMenuDataListAdapter extends RecyclerView.Adapter<HomeMenuDataLi
         firebaseUser = firebaseAuth.getCurrentUser();
         db = FirebaseFirestore.getInstance();
         datamap = new HashMap<>();
+        datamap2 = new HashMap<>();
+
     }
 
     @NonNull
@@ -56,7 +60,8 @@ public class HomeMenuDataListAdapter extends RecyclerView.Adapter<HomeMenuDataLi
     }
 
     @Override
-    public void onBindViewHolder(@NonNull HomeMenuDataListHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull final HomeMenuDataListHolder holder, final int position) {
+
         holder.setType(dataModelArrayList.get(position).getType());
         holder.setMenu(dataModelArrayList.get(position).getMenu());
         holder.setCost(dataModelArrayList.get(position).getCost());
@@ -65,19 +70,45 @@ public class HomeMenuDataListAdapter extends RecyclerView.Adapter<HomeMenuDataLi
             public void onClick(View v) {
                 Toast.makeText(v.getContext(),"coming",Toast.LENGTH_LONG).show();
                 confirmation(v,position);
+                flag = true;
+                setIsOrderd();
+
+
             }
         });
+        if(bundle.getBoolean("flag")){
+            holder.comingdata.setEnabled(false);
+        }
+        else
+        {
+            holder.comingdata.setEnabled(true);
+        }
+
     }
 
-    private void confirmation(View v, final int position) {
+    private void setIsOrderd() {
+        db.collection("CustomerUsers").whereEqualTo("PhoneNo",firebaseUser.getPhoneNumber()).get().addOnCompleteListener(
+                new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        QuerySnapshot qs = task.getResult();
+                        List<DocumentSnapshot> list = qs.getDocuments();
+                        addOrder(list.get(0).getId());
+                    }
+                }
+        );
+    }
+
+    private void confirmation(final View v, final int position) {
         AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
         builder.setMessage("Are you sure ?").setTitle("Coming");
         builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 supplierHomeMenuRequest(position);
+                Intent intent =new Intent(v.getContext(),MainActivity.class);
+                v.getContext().startActivity(intent);
             }
         });
-
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 // User cancelled the dialog
@@ -95,57 +126,78 @@ public class HomeMenuDataListAdapter extends RecyclerView.Adapter<HomeMenuDataLi
                         QuerySnapshot qs = task.getResult();
                         List<DocumentSnapshot> list = qs.getDocuments();
                         addRequest(list.get(0).getId(),position);
-
                     }
                 }
         );
     }
 
-    private void addRequest(String id,int position) {
-//        db.collection("CustomerUsers").whereEqualTo("PhoneNo",firebaseUser.getPhoneNumber()).get().addOnCompleteListener(
-//                new OnCompleteListener<QuerySnapshot>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-//                        QuerySnapshot qs = task.getResult();
-//                        List<DocumentSnapshot> list = qs.getDocuments();
-//                        addData(list.get(0).getId());
-//                    }
-//
-//                    private void addData(String id) {
-//                        db.collection("CustomerUsers").document(id).get().addOnCompleteListener(
-//                                new OnCompleteListener<DocumentSnapshot>() {
-//                                    @Override
-//                                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-//                                        DocumentSnapshot documentSnapshot = task.getResult();
-//                                        custname= documentSnapshot.getString("Name");
-//                                        custphoneno=documentSnapshot.getString("PhoneNo");
-//                                    }
-//                                }
-//                        );
-//                    }
-//                }
-//        );
-
-
-
-        custname = bundle.getString("Name");
-        custphoneno = bundle.getString("PhoneNo");
-        String menudata=dataModelArrayList.get(position).getMenu();
-        String typedata=dataModelArrayList.get(position).getType();
-        String costdata=dataModelArrayList.get(position).getCost();
-        datamap.put("Menu",menudata);
-        datamap.put("Type",typedata);
-        datamap.put("Cost",costdata);
-        datamap.put("CustName",custname);
-        datamap.put("CustPhoneNo",custphoneno);
-        db.collection("SupplierUsers").document(id).collection("RequestOrder").add(datamap).addOnCompleteListener(
-                new OnCompleteListener<DocumentReference>() {
+    private void addOrder(String id) {
+        datamap2.put("isOrdered",flag);
+        db.collection("CustomerUsers").document(id).update(datamap2).addOnCompleteListener(
+                new OnCompleteListener<Void>() {
                     @Override
-                    public void onComplete(@NonNull Task<DocumentReference> task) {
-                        Toast.makeText(view.getContext(),"Request Succcesfully Placed",Toast.LENGTH_LONG).show();
+                    public void onComplete(@NonNull Task<Void> task) {
+                        Toast.makeText(view.getContext(),"flag set : "+flag,Toast.LENGTH_LONG).show();
                     }
                 }
         );
+    }
+
+    private void addRequest(final String supid, final int position) {
+
+        db.collection("CustomerUsers").whereEqualTo("PhoneNo",firebaseUser.getPhoneNumber()).get().addOnCompleteListener(
+                new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        QuerySnapshot qs = task.getResult();
+                        List<DocumentSnapshot> ls = qs.getDocuments();
+                        fatchname(ls.get(0).getId());
+                    }
+
+                    private void fatchname(String id) {
+                        db.collection("CustomerUsers").document(id).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                            DocumentSnapshot ds = task.getResult();
+                            Log.d("In---", ds.getString("Name"));
+                                assignNAme(ds.getString("Name"));
+                            }
+                        });
+                    }
+                    private void assignNAme(String name) {
+                        custname = name;
+                        custphoneno = firebaseUser.getPhoneNumber();
+                        String menudata=dataModelArrayList.get(position).getMenu();
+                        String typedata=dataModelArrayList.get(position).getType();
+                        String costdata=dataModelArrayList.get(position).getCost();
+                        datamap.put("Menu",menudata);
+                        datamap.put("Type",typedata);
+                        datamap.put("Cost",costdata);
+                        datamap.put("CustName", custname);
+                        datamap.put("CustPhoneNo",custphoneno);
+                        db.collection("SupplierUsers").document(supid).collection("RequestOrder").add(datamap).addOnCompleteListener(
+                                new OnCompleteListener<DocumentReference>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<DocumentReference> task) {
+                                        Toast.makeText(view.getContext(),"Request Succcesfully Placed",Toast.LENGTH_LONG).show();
+                                    }
+                                }
+                        );
+
+                    }
+
+                }
+        );
+
+
+
+
+
+        //
+
+
+
+
     }
 
 
