@@ -98,5 +98,4 @@ public class MenuDataListActivity extends AppCompatActivity {
 
     });
     }
-
 }
