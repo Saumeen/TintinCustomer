@@ -9,6 +9,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.net.URL;
 import java.util.ArrayList;
 
 public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerViewHolder> {
@@ -33,6 +34,12 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerVi
         holder.setSupplierName(dataModelArrayList.get(position).getSuppliername());
         holder.setSupplierAddress(dataModelArrayList.get(position).getSupplierflatno()+", "+ dataModelArrayList.get(position).getSupplierlandmark()
              +", "+ dataModelArrayList.get(position).getSuppliercity());
+        try{
+            holder.setSupplierImage(null);
+        } catch (Exception e)
+        {
+            e.printStackTrace();
+        }
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

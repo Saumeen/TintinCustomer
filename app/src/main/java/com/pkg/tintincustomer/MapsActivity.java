@@ -186,6 +186,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 datamap.put("LandMark", landmarkdata);
                 datamap.put("City", citydata);
                 datamap.put("State", statedata);
+
                 documentReference = db.collection("CustomerUsers").document(id);
                 documentReference.update(datamap).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override

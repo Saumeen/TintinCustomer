@@ -17,7 +17,7 @@
     <style name="AppTheme.LauncherTheme">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
-        <item name="android:background">@drawable/red_gredient</item>
+        <item name="android:background">@drawable/splash</item>
     </style>
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" >
     </style>

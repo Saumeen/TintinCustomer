@@ -74,8 +74,10 @@ public class DetailsActivity extends AppCompatActivity {
                     private void updateData(String id) {
                         String namedata  =name.getText().toString();
                         String emaildata = email.getText().toString();
+                        Boolean flag=false;
                         datalist.put("Name",namedata);
                         datalist.put("Email",emaildata);
+                        datalist.put("isOrdered",flag);
 
                         documentReference = db.collection("CustomerUsers").document(id);
                         documentReference.update(datalist).addOnSuccessListener(new OnSuccessListener<Void>() {

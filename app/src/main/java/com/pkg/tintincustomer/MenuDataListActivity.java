@@ -86,8 +86,8 @@ public class MenuDataListActivity extends AppCompatActivity {
 
 
     private void setCookData(final Bundle bundle) {
-        cookname.setText("Cook Name : "+bundle.getString("Name"));
-        cookaddress.setText("Cook Address : "+bundle.getString("Address"));
+        cookname.setText(bundle.getString("Name"));
+        cookaddress.setText(bundle.getString("Address"));
         db.collection("SupplierUsers").whereEqualTo("Name",bundle.getString("Name")).get().addOnCompleteListener(
                 new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -95,7 +95,7 @@ public class MenuDataListActivity extends AppCompatActivity {
                         if(task.isSuccessful()){
                             QuerySnapshot qs =task.getResult();
                             List<DocumentSnapshot> list = qs.getDocuments();
-                            cookphoneno.setText("Mobile No : "+list.get(0).getString("MobileNo"));
+                            cookphoneno.setText(list.get(0).getString("MobileNo"));
                             bundle.putString("PhoneNo",list.get(0).getString("MobileNo"));
                         }
                     }

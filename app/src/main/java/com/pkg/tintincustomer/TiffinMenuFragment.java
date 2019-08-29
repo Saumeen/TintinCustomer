@@ -65,10 +65,8 @@ public class TiffinMenuFragment  extends Fragment {
                             List<DocumentSnapshot> list = qs.getDocuments();
                             fatchMiniTiffinData(list.get(0).getId());
                             fatchFullTiffindata(list.get(0).getId());
-                            //cookphoneno.setText("Mobile No : "+list.get(0).getString("MobileNo"));
                         }
                     }
-
                     private void fatchFullTiffindata(String id) {
                         dataModelArrayList.clear();
                         db.collection("SupplierUsers").document(id).collection("Menu").whereEqualTo("Type","Full Tiffin").get()
@@ -93,13 +91,7 @@ public class TiffinMenuFragment  extends Fragment {
                                 Toast.makeText(view.getContext(),"Wrong in menudatalist activity",Toast.LENGTH_LONG).show();
                             }
                         });
-
-
                     }
-
-
-
-
                     private void fatchMiniTiffinData(String id) {
                         dataModelArrayList.clear();
                         db.collection("SupplierUsers").document(id).collection("Menu").whereEqualTo("Type","Mini Tiffin").get()
@@ -107,16 +99,12 @@ public class TiffinMenuFragment  extends Fragment {
                                     @Override
                                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                                         for(DocumentSnapshot documentSnapshot:task.getResult().getDocuments()){
-
                                             MenuDataModel menuDataModel = new MenuDataModel(documentSnapshot.getString("Type"),
                                                     documentSnapshot.getString("Menu"),documentSnapshot.getString("Cost"));
-
                                             dataModelArrayList.add(menuDataModel);
-
                                         }
                                         adapter = new TiffinMenuDataListViewAdapter(dataModelArrayList);
                                         recyclerView.setAdapter(adapter);
-
                                     }
                                 }).addOnFailureListener(new OnFailureListener() {
                             @Override
@@ -124,15 +112,12 @@ public class TiffinMenuFragment  extends Fragment {
                                 Toast.makeText(view.getContext(),"Wrong in menudatalist activity",Toast.LENGTH_LONG).show();
                             }
                         });
-
-
                     }
                 }
         ).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
                 Toast.makeText(view.getContext(),"Wrong in menudatalist activity",Toast.LENGTH_LONG).show();
-
             }
         });
     }
