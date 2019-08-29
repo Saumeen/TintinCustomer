@@ -1,5 +1,6 @@
 package com.pkg.tintincustomer;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,9 +13,11 @@ import java.util.ArrayList;
 public class SearchActivityViewAdapter extends RecyclerView.Adapter<SearchActivityViewHolder> {
     private ArrayList<SearchDataListModel> dataModelArrayList;
     private View view;
+    private String query;
 
-    public SearchActivityViewAdapter(ArrayList<SearchDataListModel> dataModelArrayList) {
+    public SearchActivityViewAdapter(ArrayList<SearchDataListModel> dataModelArrayList,String query) {
         this.dataModelArrayList = dataModelArrayList;
+        this.query=query;
     }
 
     @NonNull
@@ -26,10 +29,20 @@ public class SearchActivityViewAdapter extends RecyclerView.Adapter<SearchActivi
     }
 
     @Override
-    public void onBindViewHolder(@NonNull SearchActivityViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull SearchActivityViewHolder holder, final int position) {
 
-       // holder.setmenu(dataModelArrayList.get(position).getDocumentReference());
-        holder.setCookname(dataModelArrayList.get(position).getName());
+       holder.setmenu(query);
+        holder.setCookname(dataModelArrayList.get(position).getName().toString());
+        holder.itemView.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(v.getContext(),MenuDataListActivity.class);
+                        intent.putExtra("Name",dataModelArrayList.get(position).getName().toString());
+                        v.getContext().startActivity(intent);
+                    }
+                }
+        );
     }
 
     @Override

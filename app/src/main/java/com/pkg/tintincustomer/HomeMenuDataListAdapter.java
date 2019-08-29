@@ -70,8 +70,7 @@ public class HomeMenuDataListAdapter extends RecyclerView.Adapter<HomeMenuDataLi
             public void onClick(View v) {
                 Toast.makeText(v.getContext(),"coming",Toast.LENGTH_LONG).show();
                 confirmation(v,position);
-                flag = true;
-                setIsOrderd();
+
 
 
             }
@@ -105,6 +104,8 @@ public class HomeMenuDataListAdapter extends RecyclerView.Adapter<HomeMenuDataLi
         builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 supplierHomeMenuRequest(position);
+                flag = true;
+                setIsOrderd();
                 Intent intent =new Intent(v.getContext(),MainActivity.class);
                 v.getContext().startActivity(intent);
             }

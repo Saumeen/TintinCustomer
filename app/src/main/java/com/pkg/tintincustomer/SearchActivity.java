@@ -91,15 +91,22 @@ public class SearchActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                         DocumentSnapshot ds = task.getResult();
-                       ArrayList<SearchDataListModel> mx = (ArrayList<SearchDataListModel>) ds.get(query);
-                        Log.d("String----",mx.get(0)+"") ;
-//                        for(SearchDataListModel g:mx){
-//                            SearchDataListModel searchDataModel = new SearchDataListModel(g.getDocumentReference(),query);
-//                            dataModelArrayList.add(searchDataModel);
-//                            adapter = new SearchActivityViewAdapter(dataModelArrayList);
-//                            recycler_view.setAdapter(adapter);
-//                        }
+                       try{
+                        ArrayList<Map<String,Object>> data = (ArrayList<Map<String, Object>>) ds.get(query);
+                       for(int i =0;i<data.size();i++) {
 
+                           Map<String,Object> metadata = data.get(i);
+                           Log.d("Str--",metadata.toString());
+                           SearchDataListModel searchDataModel = new SearchDataListModel(metadata.get("MenuId"),metadata.get("SupplierId"));
+                           dataModelArrayList.add(searchDataModel);
+                           Log.d("String----", metadata.get("SupplierId") + "");
+                       }
+                           adapter = new SearchActivityViewAdapter(dataModelArrayList,query);
+                           recycler_view.setAdapter(adapter);
+
+                    }catch(NullPointerException e){
+                           Toast.makeText(getApplicationContext(),"Not found",Toast.LENGTH_LONG).show();
+                       }
                     }
                 }
         );

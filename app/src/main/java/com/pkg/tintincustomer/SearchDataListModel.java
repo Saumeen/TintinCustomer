@@ -3,28 +3,27 @@ package com.pkg.tintincustomer;
 import com.google.firebase.firestore.DocumentReference;
 
 public class SearchDataListModel {
-private DocumentReference documentReference;
-private String name;
+    private Object menu;
+    private Object name;
 
-    public SearchDataListModel(DocumentReference documentReference, String name) {
-        this.documentReference = documentReference;
+    public SearchDataListModel(Object menu, Object name) {
+        this.menu = menu;
         this.name = name;
     }
 
-    public DocumentReference getDocumentReference() {
-        return documentReference;
+    public Object getMenu() {
+        return menu;
     }
 
-    public void setDocumentReference(DocumentReference documentReference) {
-        this.documentReference = documentReference;
+    public void setMenu(Object menu) {
+        this.menu = menu;
     }
 
-    public String getName() {
+    public Object getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(Object name) {
         this.name = name;
     }
 }
-
