@@ -59,7 +59,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     Marker mCurrLocationMarker;
     GoogleApiClient mGoogleApiClient;
     LocationRequest mLocationRequest;
-    TextInputEditText homeno,landmark,city;
+    TextInputEditText homeno,landmark,city,state;
     private FirebaseAuth firebaseAuth;
     private FirebaseUser firebaseUser;
     private FirebaseFirestore db;
@@ -79,6 +79,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         homeno= findViewById(R.id.map_houseflatno);
         landmark=findViewById(R.id.map_landmarkaddres);
         city = findViewById(R.id.map_cityaddress);
+        state=findViewById(R.id.map_stateaddress);
         submit = findViewById(R.id.map_subumit);
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser = firebaseAuth.getCurrentUser();
@@ -124,12 +125,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     try {
                         Geocoder geocoder = new Geocoder(this, Locale.getDefault());
                         addresses = geocoder.getFromLocation(latitude, longitude, 1); // Here 1 represent max location result to returned, by documents it recommended 1 to 5
-                        city.setText(addresses.get(0).getLocality()+","+addresses.get(0).getAdminArea());
-
-
-
-
-
+                        city.setText(addresses.get(0).getLocality());
+                        state.setText(addresses.get(0).getAdminArea());
                         String address = addresses.get(0).getAddressLine(0); // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
                         String city = addresses.get(0).getLocality();
                         String state = addresses.get(0).getAdminArea();
@@ -155,6 +152,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 System.out.println("---------------------------------------.Inner If");
             }
             System.out.println("---------------------------------------.Outer If");
+
         }
         else {
             buildGoogleApiClient();
@@ -179,8 +177,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             private void addData(String id) {
                 String homenodata = homeno.getText().toString();
                 String landmarkdata = landmark.getText().toString();
-                String citydata = addresses.get(0).getLocality();
-                String statedata = addresses.get(0).getAdminArea();
+
+                String citydata = city.getText().toString();
+                String statedata = state.getText().toString();
 
                 datamap.put("HomeNo", homenodata);
                 datamap.put("LandMark", landmarkdata);

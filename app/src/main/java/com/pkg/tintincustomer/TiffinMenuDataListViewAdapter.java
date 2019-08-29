@@ -30,6 +30,10 @@ public class TiffinMenuDataListViewAdapter extends RecyclerView.Adapter<MenuData
     private FirebaseUser firebaseUser;
     private FirebaseFirestore db;
     private Map<String,Object> datamap;
+    public final int maxflag=1;
+    public int minflag=0;
+    private View view;
+
 
     public TiffinMenuDataListViewAdapter(ArrayList<MenuDataModel> dataModelArrayList) {
 
@@ -38,14 +42,17 @@ public class TiffinMenuDataListViewAdapter extends RecyclerView.Adapter<MenuData
         firebaseUser = firebaseAuth.getCurrentUser();
         db = FirebaseFirestore.getInstance();
         datamap = new HashMap<>();
+        minflag=0;
+
     }
 
     @NonNull
     @Override
     public MenuDataListViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater =LayoutInflater.from(parent.getContext());
-        View view = layoutInflater.inflate(R.layout.tiffinmenudata_card,parent,false);
+        view = layoutInflater.inflate(R.layout.tiffinmenudata_card,parent,false);
         return new MenuDataListViewHolder(view);
+
     }
 
     @Override
@@ -56,7 +63,13 @@ public class TiffinMenuDataListViewAdapter extends RecyclerView.Adapter<MenuData
         holder.addmenudata.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addToCartData(v,position);
+                if(minflag==maxflag){
+                    Toast.makeText(view.getContext(),"Already added check in cart",Toast.LENGTH_LONG).show();
+                }
+                else {
+                    addToCartData(v, position);
+                    minflag = minflag+1;
+                }
             }
         });
     }
@@ -103,5 +116,6 @@ public class TiffinMenuDataListViewAdapter extends RecyclerView.Adapter<MenuData
     public int getItemCount() {
         return dataModelArrayList.size();
     }
+
 
     }
