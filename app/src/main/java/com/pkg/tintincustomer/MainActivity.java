@@ -13,6 +13,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -60,7 +61,7 @@ public class MainActivity extends AppCompatActivity
     private TextView navaddress;
     private TextView user_name;
     private TextView user_email;
-    private ImageView user_photo;
+    private ImageView city_image;
     private View header;
     String[] citydata={"Nadiad","Godhra","Vadodara","Ahmedabad","Gandhinagar","Surat","Anand"};
     @Override
@@ -83,23 +84,26 @@ public class MainActivity extends AppCompatActivity
                         .setAction("Action", null).show();
             }
         });
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        final DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         header = navigationView.getHeaderView(0);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
-        toggle.syncState();
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                drawer.openDrawer(GravityCompat.START);
+            }
+        });
         navigationView.setNavigationItemSelectedListener(this);
         searchspin = findViewById(R.id.searchspiner);
         user_email = header.findViewById(R.id.user_email);
         user_name = header.findViewById(R.id.user_name);
-        user_photo = header.findViewById(R.id.user_photo);
-        firebaseAuth = FirebaseAuth.getInstance();
-        firebaseUser = firebaseAuth.getCurrentUser();
-        Log.d("Header Data","User name");
-        user_name.setText(firebaseUser.getDisplayName());
-        user_email.setText(firebaseUser.getEmail());
+        city_image = findViewById(R.id.city_image);
+        city_image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                searchspin.performClick();
+            }
+        });
         authentication();
         layoutauthentication();
         addItemOnSpinner();
@@ -134,7 +138,8 @@ public class MainActivity extends AppCompatActivity
                     @Override
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                         DocumentSnapshot documentSnapshot = task.getResult();
-
+                        user_name.setText(documentSnapshot.getString("Name"));
+                        user_email.setText((documentSnapshot.getString("PhoneNo")));
                         navaddress = findViewById(R.id.nav_address1);
                         navaddress.setText(String.format(getString(R.string.Change))
                                 +documentSnapshot.getString("HomeNo")+","+documentSnapshot.getString("LandMark")+","
@@ -182,9 +187,6 @@ public class MainActivity extends AppCompatActivity
     private void authentication() {
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser = firebaseAuth.getCurrentUser();
-        Log.d("Header Data","User name"+firebaseUser.getDisplayName());
-        user_name.setText(firebaseUser.getDisplayName());
-        user_email.setText(firebaseUser.getEmail());
         db = FirebaseFirestore.getInstance();
     }
 
@@ -313,27 +315,6 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override

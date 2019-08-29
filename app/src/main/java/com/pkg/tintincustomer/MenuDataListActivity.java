@@ -54,7 +54,13 @@ public class MenuDataListActivity extends AppCompatActivity {
         bundle = intent.getExtras();
         BottomAppBar toolbar = findViewById(R.id.toolbar_menudata);
         setSupportActionBar(toolbar);
-
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
         final ViewPager viewPager =findViewById(R.id.viewpager_menudata);
         final TabsAdapter tabsAdapter = new TabsAdapter(getSupportFragmentManager(),bundle);
         viewPager.setAdapter(tabsAdapter);
