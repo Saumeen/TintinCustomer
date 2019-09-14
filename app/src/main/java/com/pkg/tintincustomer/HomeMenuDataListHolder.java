@@ -14,7 +14,7 @@ public class HomeMenuDataListHolder extends RecyclerView.ViewHolder {
     public HomeMenuDataListHolder(@NonNull View itemView) {
         super(itemView);
         view=itemView;
-       comingdata = view.findViewById(R.id.homemenudatacard_coming);
+        comingdata = view.findViewById(R.id.homemenudatacard_coming);
     }
     public void setType(String type){
         TextView textView = view.findViewById(R.id.homemenudatacard_type);

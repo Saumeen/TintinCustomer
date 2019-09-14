@@ -42,5 +42,7 @@ dependencies {
     implementation 'com.algolia:algoliasearch-android:3.+'
     implementation 'com.cepheuen.elegant-number-button:lib:1.0.2'
 
+    implementation 'com.github.jintin:MixAdapter:1.1'
+
 
 }

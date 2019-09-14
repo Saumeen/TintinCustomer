@@ -1,37 +1,41 @@
 package com.pkg.tintincustomer;
 
 public class MenuDataModel {
-    private String type;
-    private String menu;
-    private String cost;
+    private String Type;
+    private String Menu;
+    private String Cost;
+
+    public MenuDataModel() {
+
+    }
 
     public MenuDataModel(String type, String menu, String cost) {
-        this.type = type;
-        this.menu = menu;
-        this.cost = cost;
+        Type = type;
+        Menu = menu;
+        Cost = cost;
     }
 
     public String getType() {
-        return type;
+        return Type;
     }
 
     public void setType(String type) {
-        this.type = type;
+        Type = type;
     }
 
     public String getMenu() {
-        return menu;
+        return Menu;
     }
 
     public void setMenu(String menu) {
-        this.menu = menu;
+        Menu = menu;
     }
 
     public String getCost() {
-        return cost;
+        return Cost;
     }
 
     public void setCost(String cost) {
-        this.cost = cost;
+        Cost = cost;
     }
 }

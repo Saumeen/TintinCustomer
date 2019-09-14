@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
 
+import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
@@ -13,6 +15,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -27,6 +30,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -37,6 +41,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.Menu;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
@@ -54,8 +59,8 @@ public class MainActivity extends AppCompatActivity
     private FirebaseUser firebaseUser;
     private ArrayList<HomeDataModel> homeDataModelArrayList;
     private RecyclerView recycler_view;
-    //FirebaseHomeRecyclerViewAdapter firebaseHomeRecyclerViewAdapter;
-    private HomeRecyclerViewAdapter adapter;
+    private FirestoreRecyclerAdapter<HomeDataModel,HomeRecyclerViewHolder> adapter1;
+
     private Spinner searchspin;
     private TextView navaddress;
     private TextView user_name;
@@ -79,6 +84,7 @@ public class MainActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //Intent intent = new Intent(MainActivity.this,TrialRecyclerviewActivity.class);
                Intent intent = new Intent(MainActivity.this,SearchActivity.class);
                startActivity(intent);
             }
@@ -98,12 +104,9 @@ public class MainActivity extends AppCompatActivity
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser = firebaseAuth.getCurrentUser();
         Log.d("Header Data","User name");
-//        user_name.setText(firebaseUser.getDisplayName());
-//        user_email.setText(firebaseUser.getEmail());
         authentication();
         layoutauthentication();
         addItemOnSpinner();
-        //fatchMenuData();
         loadNavbarData();
 
         searchspin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -190,120 +193,57 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void fatchMenuData() {
-        homeDataModelArrayList.clear();
-        db.collection("SupplierUsers").whereEqualTo("City",searchspin.getSelectedItem()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+
+        Query query = db.collection("SupplierUsers").whereEqualTo("City",searchspin.getSelectedItem());
+        FirestoreRecyclerOptions<HomeDataModel> options = new FirestoreRecyclerOptions.Builder<HomeDataModel>()
+                .setQuery(query, HomeDataModel.class)
+                .build();
+
+        adapter1 = new FirestoreRecyclerAdapter<HomeDataModel, HomeRecyclerViewHolder>(options) {
+            @NonNull
             @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+            public HomeRecyclerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.home_card, parent, false);
+                return new HomeRecyclerViewHolder(view);
+            }
 
-                Log.d("MainActivity--",task.getResult().getDocuments()+""+firebaseUser.getPhoneNumber());
-                for(DocumentSnapshot documentSnapshot:task.getResult().getDocuments()){
+            @Override
+            protected void onBindViewHolder(@NonNull HomeRecyclerViewHolder dataViewHolder, final int i, @NonNull final HomeDataModel data) {
+                dataViewHolder.setSupplierName(data.getName());
+                dataViewHolder.setSupplierAddress(data.getHouseFlatNo()+","+data.getLandmark()+""+data.getCity());
 
-                    HomeDataModel homeDataModel =new HomeDataModel(documentSnapshot.getString("Name"),
-                            documentSnapshot.getString("HouseFlatNo"),
-                            documentSnapshot.getString("Landmark"),
-                            documentSnapshot.getString("City"));
+                dataViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Toast.makeText(v.getContext(),i+"",Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(v.getContext(),MenuDataListActivity.class);
+                        intent.putExtra("Name",data.getName());
+                        intent.putExtra("Address",data.getHouseFlatNo()+","+data.getLandmark()+""+data.getCity());
+                        v.getContext().startActivity(intent);
 
-                    homeDataModelArrayList.add(homeDataModel);
-                    Log.d("Log---", documentSnapshot.getString("City") + "");
-                    adapter = new HomeRecyclerViewAdapter(MainActivity.this, homeDataModelArrayList);
-                    adapter.notifyDataSetChanged();
-                    recycler_view.setAdapter(adapter);
-                }
+                    }
+                });
 
             }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(getApplicationContext(),"Something Wrong",Toast.LENGTH_LONG).show();
-            }
-        });
+        };
+        recycler_view.setAdapter(adapter1);
+        adapter1.startListening();
     }
-
-  //  private void loadData(String id, final String suppliernamedata) {
-
-//        Query query = db.collection("SupplierUsers").document(id).collection("Menu")
-//                .orderBy("Menu");
-//        Log.d("MainActivity--", query.get()+"");
-//
-//        FirestoreRecyclerOptions<HomeDataModel> options = new FirestoreRecyclerOptions.Builder<HomeDataModel>()
-//                .setQuery(query,HomeDataModel.class).build();
-//        Log.d("MainActivity--",options+"");
-//        Log.d("MainActivity--",options.getSnapshots() +"");
-//        firebaseHomeRecyclerViewAdapter = new FirebaseHomeRecyclerViewAdapter(options);
-//        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-//        recycler_view = findViewById(R.id.home_recyclerview);
-//        recycler_view.setLayoutManager(linearLayoutManager);
-//        linearLayoutManager.setReverseLayout(false);
-//        linearLayoutManager.setSmoothScrollbarEnabled(true);
-//        recycler_view.setAdapter(firebaseHomeRecyclerViewAdapter);
-//        firebaseHomeRecyclerViewAdapter.startListening();
-
-
-//                dataModelArrayList.clear();
-//                db.collection("SupplierUsers").document(id).collection("Menu")
-//                .addSnapshotListener(new EventListener<QuerySnapshot>() {
-//                    @Override
-//                    public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
-//
-//
-//                        // adapter=null;
-//                        for(QueryDocumentSnapshot documentSnapshot:queryDocumentSnapshots) {
-//                            HomeDataModel menuDataModel =new HomeDataModel(suppliernamedata,
-//                                        documentSnapshot.getString("Menu"),
-//                                        documentSnapshot.getString("Cost"));
-//                            dataModelArrayList.add(menuDataModel);
-//                            Log.d("Log---", documentSnapshot.getString("Menu") + "");
-//                        }
-//                        adapter = new HomeRecyclerViewAdapter(MainActivity.this, dataModelArrayList);
-//                        adapter.notifyDataSetChanged();
-//                        recycler_view.setAdapter(adapter);
-//                    }
-//                });
-
-
-
-
-
-//        homeDataModelArrayList.clear();
-//        db.collection("SupplierUsers").document(id).get()
-//
-//                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-//
-//                            DocumentSnapshot documentSnapshot = task.getResult();
-//                            Log.d("Main---",documentSnapshot+"");
-//                            HomeDataModel menuDataModel =new HomeDataModel(suppliernamedata,
-//                                    documentSnapshot.getString("HouseFlatNo"),
-//                                    documentSnapshot.getString("Landmark"),
-//                                    documentSnapshot.getString("City"));
-//
-//                            homeDataModelArrayList.add(menuDataModel);
-//                            Log.d("Log---", documentSnapshot.getString("Menu") + "");
-//
-//                        adapter = new HomeRecyclerViewAdapter(MainActivity.this, homeDataModelArrayList);
-//                        adapter.notifyDataSetChanged();
-//                        recycler_view.setAdapter(adapter);
-//                    }
-//                }).addOnFailureListener(new OnFailureListener() {
-//            @Override
-//            public void onFailure(@NonNull Exception e) {
-//
-//            }
-//        });
-//    }
 
 
     @Override
-    public void onStart() {
+    protected void onStart() {
         super.onStart();
+        fatchMenuData();
     }
 
     @Override
-    public void onStop() {
+    protected void onStop(){
         super.onStop();
+        if(adapter1 != null){
+            adapter1.stopListening();
+        }
     }
-
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = findViewById(R.id.drawer_layout);

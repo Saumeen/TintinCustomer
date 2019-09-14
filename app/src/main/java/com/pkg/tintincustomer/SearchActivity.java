@@ -52,6 +52,7 @@ public class SearchActivity extends AppCompatActivity {
     private SimpleCursorAdapter cursoradapter;
     private String cookname;
     private Map<String,Object> searchlist;
+    private ArrayList<Map<String,Object>> data;
 //    private String menudata[] ={"Dal","Bhat","PauBhaji","PaniPuri","Roti","Chapati","Khichdi","Kadhi","Khaman Dhokla","Dabeli","Patra","DalDhokli","Kadhi","Roti","Chapati","Kachumber","Buttermilk","Wagharelo Rotlo",
 //            "BhaatNaPoodla","Chivda","Nimki","Namkeen Shakarpara","Basundi","Shrikhand","FadaNiLapsi","DoodhPaak","Bhakri",
 //            "Kobi","Karela","Bhindi","Rajma","Achar","ChanaDal","Aloo","Paneer","Nan","Dosa","Idli","PauBhaji","Thepla","Paratha",
@@ -107,21 +108,25 @@ public class SearchActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                         DocumentSnapshot ds = task.getResult();
                        try{
-                        ArrayList<Map<String,Object>> data = (ArrayList<Map<String, Object>>) ds.get(query);
-                       for(int i =0;i<data.size();i++) {
+                        data = (ArrayList<Map<String, Object>>) ds.get(query);
 
-                           Map<String,Object> metadata = data.get(i);
-                           Log.d("Str--",metadata.toString());
-                           SearchDataListModel searchDataModel = new SearchDataListModel(metadata.get("MenuId"),metadata.get("SupplierId"));
-                           dataModelArrayList.add(searchDataModel);
-                           Log.d("String----", metadata.get("SupplierId") + "");
-                       }
-                           adapter = new SearchActivityViewAdapter(dataModelArrayList,query);
-                           recycler_view.setAdapter(adapter);
+                            for (int i = 0; i < data.size(); i++) {
+
+                                Map<String, Object> metadata = data.get(i);
+                                Log.d("Str--", metadata.toString());
+                                SearchDataListModel searchDataModel = new SearchDataListModel(metadata.get("MenuId"), metadata.get("SupplierId"));
+                                dataModelArrayList.add(searchDataModel);
+                                Log.d("String----", metadata.get("SupplierId") + "");
+
+                            }
+                            adapter = new SearchActivityViewAdapter(dataModelArrayList, query);
+                            recycler_view.setAdapter(adapter);
+
 
                     }catch(NullPointerException e){
                            Toast.makeText(getApplicationContext(),"Not found",Toast.LENGTH_LONG).show();
                        }
+
                     }
                 }
         );

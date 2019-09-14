@@ -63,13 +63,10 @@ public class TiffinMenuDataListViewAdapter extends RecyclerView.Adapter<MenuData
         holder.addmenudata.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(minflag==maxflag){
-                    Toast.makeText(view.getContext(),"Already added check in cart",Toast.LENGTH_LONG).show();
-                }
-                else {
+
+
                     addToCartData(v, position);
-                    minflag = minflag+1;
-                }
+
             }
         });
     }

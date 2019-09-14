@@ -62,7 +62,7 @@ public class HomeMenuDataListAdapter extends RecyclerView.Adapter<HomeMenuDataLi
     @Override
     public void onBindViewHolder(@NonNull final HomeMenuDataListHolder holder, final int position) {
 
-        holder.setType(dataModelArrayList.get(position).getType());
+   /*     holder.setType(dataModelArrayList.get(position).getType());
         holder.setMenu(dataModelArrayList.get(position).getMenu());
         holder.setCost(dataModelArrayList.get(position).getCost());
         holder.comingdata.setOnClickListener(new View.OnClickListener() {
@@ -82,7 +82,7 @@ public class HomeMenuDataListAdapter extends RecyclerView.Adapter<HomeMenuDataLi
         {
             holder.comingdata.setEnabled(true);
         }
-
+*/
     }
 
     private void setIsOrderd() {

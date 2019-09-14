@@ -1,47 +1,51 @@
 package com.pkg.tintincustomer;
-
+/**  Its supplier details and used in Homerecycler view adapter**/
 public class HomeDataModel {
-    private String suppliername;
-    private String supplierflatno;
-    private String supplierlandmark;
-    private String suppliercity;
+    private String Name;
+    private String HouseFlatNo;
+    private String Landmark;
+    private String City;
 
-    public HomeDataModel(String suppliername, String supplierflatno, String supplierlandmark, String suppliercity) {
-        this.suppliername = suppliername;
-        this.supplierflatno = supplierflatno;
-        this.supplierlandmark = supplierlandmark;
-        this.suppliercity = suppliercity;
+    public String getName() {
+        return Name;
     }
 
-    public String getSuppliername() {
-        return suppliername;
+    public void setName(String name) {
+        Name = name;
     }
 
-    public void setSuppliername(String suppliername) {
-        this.suppliername = suppliername;
+    public String getHouseFlatNo() {
+        return HouseFlatNo;
     }
 
-    public String getSupplierflatno() {
-        return supplierflatno;
+    public void setHouseFlatNo(String houseFlatNo) {
+        HouseFlatNo = houseFlatNo;
     }
 
-    public void setSupplierflatno(String supplierflatno) {
-        this.supplierflatno = supplierflatno;
+    public String getLandmark() {
+        return Landmark;
     }
 
-    public String getSupplierlandmark() {
-        return supplierlandmark;
+    public void setLandmark(String landmark) {
+        Landmark = landmark;
     }
 
-    public void setSupplierlandmark(String supplierlandmark) {
-        this.supplierlandmark = supplierlandmark;
+    public String getCity() {
+        return City;
     }
 
-    public String getSuppliercity() {
-        return suppliercity;
+    public void setCity(String city) {
+        City = city;
     }
 
-    public void setSuppliercity(String suppliercity) {
-        this.suppliercity = suppliercity;
+    public HomeDataModel() {
     }
-}
+
+    public HomeDataModel(String name, String houseFlatNo, String landmark, String city) {
+        Name = name;
+        HouseFlatNo = houseFlatNo;
+        Landmark = landmark;
+        City = city;
+    }
+
+    }

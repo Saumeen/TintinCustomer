@@ -89,13 +89,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(addresses!=null) {
+
                     setAddressFirebase(addresses);
 
                     Intent intent = new Intent(MapsActivity.this,MainActivity.class);
                     startActivity(intent);
                     finish();
-                }
+
             }
         });
 
