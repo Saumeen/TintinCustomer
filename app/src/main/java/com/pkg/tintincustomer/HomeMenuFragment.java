@@ -210,18 +210,18 @@ public class HomeMenuFragment extends Fragment {
                         fatchname(ls.get(0).getId(),data);
                     }
 
-                    private void fatchname(String id, final MenuDataModel data) {
+                    private void fatchname(final String id, final MenuDataModel data) {
                         db.collection("CustomerUsers").document(id).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                             @Override
                             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                                 DocumentSnapshot ds = task.getResult();
                                 Log.d("In---", ds.getString("Name"));
-                                assignNAme(ds.getString("Name"),data);
+                                assignNAme(ds.getString("Name"),data,id);
                             }
                         });
                     }
 
-                    private void assignNAme(String name,MenuDataModel data) {
+                    private void assignNAme(String name,MenuDataModel data,String Cusid) {
                         custname = name;
                         custphoneno = firebaseUser.getPhoneNumber();
                         String menudata = data.getMenu();
@@ -240,6 +240,11 @@ public class HomeMenuFragment extends Fragment {
                                     }
                                 }
                         );
+                        db.collection("CustomerUsers").document(Cusid).collection("History").add(datamap).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+                            @Override
+                            public void onComplete(@NonNull Task<DocumentReference> task) {
+                            }
+                        });
 
                     }
 

@@ -8,101 +8,125 @@
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    >
-
-    <TextView
-        android:id="@+id/menudata_address"
         android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-        android:layout_height="45dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:fontFamily="serif"
-        android:textStyle="bold"
+        <ImageView
+            android:id="@+id/imageView6"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/baker" />
 
-        android:hint="Cook Address"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/menudata_suppliername" />
+        <ImageView
+            android:id="@+id/imageView10"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView9"
+            app:srcCompat="@drawable/phone" />
 
-    <TextView
-        android:id="@+id/menudata_suppliername"
-        android:layout_width="match_parent"
-        android:textStyle="bold"
-        android:layout_height="45dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"
-        android:fontFamily="serif"
-        android:textSize="15dp"
-        android:textAlignment="gravity"
-        android:hint="Cook Name"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <ImageView
+            android:id="@+id/imageView9"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView6"
+            app:srcCompat="@drawable/placeholder" />
+
+        <TextView
+            android:id="@+id/menudata_address"
+            android:layout_width="wrap_content"
+
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="12dp"
+
+            android:fontFamily="serif"
+            android:hint="Cook Address"
+            android:textColor="@color/gray3"
+            android:textSize="12dp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@+id/imageView9"
+            app:layout_constraintTop_toBottomOf="@+id/menudata_suppliername" />
+
+        <TextView
+            android:id="@+id/menudata_suppliername"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:fontFamily="serif"
+            android:hint="Cook Name"
+            android:textAlignment="gravity"
+            android:textSize="16dp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@+id/imageView6"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/menudata_phoneno"
-            android:layout_width="match_parent"
-            android:layout_height="45dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
+            android:layout_marginTop="12dp"
             android:fontFamily="serif"
             android:hint="Phone No"
             android:textAlignment="gravity"
-            android:textSize="15dp"
+            android:textSize="12dp"
             android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/imageView10"
             app:layout_constraintTop_toBottomOf="@+id/menudata_address" />
 
 
         <!--<com.google.android.material.tabs.TabLayout-->
-            <!--android:id="@+id/tablayout_menudata"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_marginTop="12dp"-->
-            <!--android:layout_marginEnd="8dp"-->
-            <!--app:layout_constraintEnd_toEndOf="@+id/menudata_suppliername"-->
-            <!--app:layout_constraintHorizontal_bias="0.0"-->
-            <!--app:layout_constraintStart_toStartOf="@+id/menudata_suppliername"-->
-            <!--app:layout_constraintTop_toBottomOf="@+id/menudata_phoneno" />-->
+        <!--android:id="@+id/tablayout_menudata"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginTop="12dp"-->
+        <!--android:layout_marginEnd="8dp"-->
+        <!--app:layout_constraintEnd_toEndOf="@+id/menudata_suppliername"-->
+        <!--app:layout_constraintHorizontal_bias="0.0"-->
+        <!--app:layout_constraintStart_toStartOf="@+id/menudata_suppliername"-->
+        <!--app:layout_constraintTop_toBottomOf="@+id/menudata_phoneno" />-->
 
         <!--<androidx.constraintlayout.widget.ConstraintLayout-->
-            <!--android:id="@+id/constraintLayout2"-->
-            <!--android:layout_width="396dp"-->
-            <!--android:layout_height="494dp"-->
-            <!--android:layout_marginTop="8dp"-->
-            <!--android:layout_marginEnd="8dp"-->
-            <!--app:layout_constraintEnd_toEndOf="parent"-->
-            <!--app:layout_constraintStart_toStartOf="parent"-->
-            <!--app:layout_constraintTop_toBottomOf="@+id/tablayout_menudata">-->
+        <!--android:id="@+id/constraintLayout2"-->
+        <!--android:layout_width="396dp"-->
+        <!--android:layout_height="494dp"-->
+        <!--android:layout_marginTop="8dp"-->
+        <!--android:layout_marginEnd="8dp"-->
+        <!--app:layout_constraintEnd_toEndOf="parent"-->
+        <!--app:layout_constraintStart_toStartOf="parent"-->
+        <!--app:layout_constraintTop_toBottomOf="@+id/tablayout_menudata">-->
 
-            <!--<androidx.viewpager.widget.ViewPager-->
-                <!--android:id="@+id/viewpager_menudata"-->
-                <!--android:layout_width="0dp"-->
-                <!--android:layout_height="0dp"-->
-                <!--android:layout_marginTop="8dp"-->
-                <!--android:layout_marginBottom="8dp"-->
-                <!--app:layout_constraintBottom_toBottomOf="parent"-->
-                <!--app:layout_constraintEnd_toEndOf="parent"-->
-                <!--app:layout_constraintStart_toStartOf="parent"-->
-                <!--app:layout_constraintTop_toTopOf="parent" >-->
+        <!--<androidx.viewpager.widget.ViewPager-->
+        <!--android:id="@+id/viewpager_menudata"-->
+        <!--android:layout_width="0dp"-->
+        <!--android:layout_height="0dp"-->
+        <!--android:layout_marginTop="8dp"-->
+        <!--android:layout_marginBottom="8dp"-->
+        <!--app:layout_constraintBottom_toBottomOf="parent"-->
+        <!--app:layout_constraintEnd_toEndOf="parent"-->
+        <!--app:layout_constraintStart_toStartOf="parent"-->
+        <!--app:layout_constraintTop_toTopOf="parent" >-->
         <!--</androidx.viewpager.widget.ViewPager>-->
 
         <!--<androidx.recyclerview.widget.RecyclerView-->
-            <!--android:id="@+id/menudata_recyclerview"-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_height="0dp"-->
-            <!--app:layout_constraintBottom_toBottomOf="@+id/constraintLayout2"-->
-            <!--app:layout_constraintEnd_toEndOf="@+id/constraintLayout2"-->
-            <!--app:layout_constraintStart_toStartOf="@+id/constraintLayout2"-->
-            <!--app:layout_constraintTop_toTopOf="@+id/constraintLayout2" />-->
+        <!--android:id="@+id/menudata_recyclerview"-->
+        <!--android:layout_width="0dp"-->
+        <!--android:layout_height="0dp"-->
+        <!--app:layout_constraintBottom_toBottomOf="@+id/constraintLayout2"-->
+        <!--app:layout_constraintEnd_toEndOf="@+id/constraintLayout2"-->
+        <!--app:layout_constraintStart_toStartOf="@+id/constraintLayout2"-->
+        <!--app:layout_constraintTop_toTopOf="@+id/constraintLayout2" />-->
 
         <!--</androidx.constraintlayout.widget.ConstraintLayout>-->
 
@@ -110,17 +134,16 @@
         <androidx.viewpager.widget.ViewPager xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/viewpager_menudata"
 
-            android:layout_width="395dp"
-            android:layout_height="478dp"
+            android:layout_width="match_parent"
+            android:layout_height="570dp"
 
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
+            android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/menudata_phoneno"
+            app:layout_constraintTop_toBottomOf="@+id/imageView10"
             app:layout_constraintVertical_bias="0.0">
 
 
@@ -140,6 +163,7 @@
         android:layout_gravity="bottom"
         app:backgroundTint="@color/colorPrimary"
         app:buttonGravity="bottom|top"
+        app:hideOnScroll="true"
         app:fabAlignmentMode="end"
         app:navigationIcon="@drawable/ic_arrow_back"/>
 

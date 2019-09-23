@@ -2,10 +2,15 @@ package com.pkg.tintincustomer;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -39,6 +44,8 @@ public class MenuDataListActivity extends AppCompatActivity {
     private TiffinMenuDataListViewAdapter adapter;
     private Button cartdata;
     private TabLayout tabLayout;
+    private static final int REQUEST_PHONE_CALL = 1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,7 +61,13 @@ public class MenuDataListActivity extends AppCompatActivity {
         bundle = intent.getExtras();
         BottomAppBar toolbar = findViewById(R.id.toolbar_menudata);
         setSupportActionBar(toolbar);
-
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
         final ViewPager viewPager =findViewById(R.id.viewpager_menudata);
         final TabsAdapter tabsAdapter = new TabsAdapter(getSupportFragmentManager(),bundle);
         viewPager.setAdapter(tabsAdapter);
@@ -67,10 +80,25 @@ public class MenuDataListActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MenuDataListActivity.this,CartOrderActivity.class);
+                intent.putExtra("Name",bundle.getString("Name"));
                 startActivity(intent);
             }
         });
         setCookData(bundle);
+        cookphoneno.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + bundle.getString("PhoneNo")));
+                if (ContextCompat.checkSelfPermission(MenuDataListActivity.this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(MenuDataListActivity.this, new String[]{Manifest.permission.CALL_PHONE},REQUEST_PHONE_CALL);
+                    startActivity(intent);
+                }
+                else
+                {
+                    startActivity(intent);
+                }
+            }
+        });
     }
 
 
@@ -80,8 +108,8 @@ public class MenuDataListActivity extends AppCompatActivity {
 
 
     private void setCookData(final Bundle bundle) {
-        cookname.setText("Cook Name : "+bundle.getString("Name"));
-//        cookaddress.setText("Cook Address : "+bundle.getString("Address"));
+        cookname.setText(bundle.getString("Name"));
+        cookaddress.setText(bundle.getString("Address"));
         db.collection("SupplierUsers").whereEqualTo("Name",bundle.getString("Name")).get().addOnCompleteListener(
                 new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -89,8 +117,7 @@ public class MenuDataListActivity extends AppCompatActivity {
                         if(task.isSuccessful()){
                             QuerySnapshot qs =task.getResult();
                             List<DocumentSnapshot> list = qs.getDocuments();
-                            cookphoneno.setText("Mobile No : "+list.get(0).getString("MobileNo"));
-                            cookaddress.setText("Cook Address :"+list.get(0).getString("HouseFlatNo")+" "+list.get(0).getString("Landmark")+" "+list.get(0).getString("City"));
+                            cookphoneno.setText(list.get(0).getString("MobileNo"));
                             bundle.putString("PhoneNo",list.get(0).getString("MobileNo"));
                         }
                     }
@@ -98,4 +125,6 @@ public class MenuDataListActivity extends AppCompatActivity {
 
     });
     }
+
+
 }

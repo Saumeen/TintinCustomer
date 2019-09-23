@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
-
-
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -18,42 +17,82 @@
         android:layout_marginBottom="5dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        card_view:cardBackgroundColor="@color/colorCard"
+        card_view:cardBackgroundColor="@color/colorTextWhite"
         card_view:cardCornerRadius="3dp"
 
        >
-        <RelativeLayout
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/relativeLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:paddingLeft="0dp">
+
             <TextView
                 android:id="@+id/homecard_suppliername"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="12dp"
                 android:fontFamily="serif"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
+                android:hint="Supplier Name"
+                android:textSize="16dp"
                 android:textColor="@color/colorTextBlack"
-                android:hint="Supplier Name" />
+                card_view:layout_constraintStart_toEndOf="@+id/imageView7"
+                card_view:layout_constraintTop_toTopOf="parent"
+                tools:layout_conversion_wrapHeight="50"
+                tools:layout_conversion_wrapWidth="1054" />
 
             <TextView
-                android:fontFamily="serif"
                 android:id="@+id/homecard_supplieraddres"
-                android:layout_width="match_parent"
-                android:layout_height="22dp"
-                android:layout_below="@+id/homecard_suppliername"
-                android:layout_alignParentStart="true"
-                android:textColor="@color/colorTextBlack"
-                android:layout_alignParentBottom="true"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                android:hint="Address" />
+                android:layout_width="wrap_content"
+                android:layout_height="17dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:textSize="12dp"
+                android:fontFamily="serif"
+                android:hint="Address"
+                android:textColor="@color/gray3"
+                card_view:layout_constraintStart_toEndOf="@+id/imageView8"
+                card_view:layout_constraintTop_toBottomOf="@+id/homecard_suppliername"
+                tools:layout_conversion_wrapHeight="58"
+                tools:layout_conversion_wrapWidth="1054" />
+
+            <ImageView
+                android:id="@+id/cookImage"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_marginStart="8dp"
+                android:background="@drawable/rounded"
+                android:padding="10dp"
+                android:src="@drawable/pan"
+                card_view:layout_constraintBottom_toBottomOf="parent"
+                card_view:layout_constraintStart_toStartOf="parent"
+                card_view:layout_constraintTop_toTopOf="parent"
+                card_view:srcCompat="@drawable/pan" />
+
+            <ImageView
+                android:id="@+id/imageView7"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="12dp"
+                android:src="@drawable/baker"
+                card_view:layout_constraintStart_toEndOf="@+id/cookImage"
+                card_view:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/imageView8"
+                android:layout_width="17dp"
+                android:layout_height="17dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:src="@drawable/placeholder"
+                card_view:layout_constraintStart_toEndOf="@+id/cookImage"
+                card_view:layout_constraintTop_toBottomOf="@+id/imageView7" />
 
 
-
-        </RelativeLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 
 </LinearLayout>

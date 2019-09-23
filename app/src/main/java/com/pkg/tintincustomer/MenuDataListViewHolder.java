@@ -16,20 +16,24 @@ public class MenuDataListViewHolder extends RecyclerView.ViewHolder {
         super(itemView);
         view = itemView;
         addmenudata = view.findViewById(R.id.menudatacard_add);
-        removecartdata =view.findViewById(R.id.menudatacard_remove);
+        removecartdata =view.findViewById(R.id.menudatacard_add);
 
     }
 
     public void setType(String type){
         TextView textView = view.findViewById(R.id.menudatacard_type);
-        textView.setText("Type :"+ type);
+        textView.setText(type);
     }
     public void setMenu(String menu){
         TextView textView = view.findViewById(R.id.menudatacard_menu);
-        textView.setText("Menu : "+menu);
+        textView.setText(menu);
     }
     public void setCost(String cost){
         TextView textView = view.findViewById(R.id.menudatacard_cost);
-        textView.setText("Cost : "+cost);
+        textView.setText(cost);
+    }
+    public void setCookName(String name){
+        TextView textView = view.findViewById(R.id.CookName_carddata);
+        textView.setText(name);
     }
 }

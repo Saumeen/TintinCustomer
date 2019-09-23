@@ -9,7 +9,7 @@
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="121dp"
+        android:layout_height="100dp"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="5dp"
         android:layout_marginRight="10dp"
@@ -20,32 +20,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/relativeLayout2"
             android:layout_width="match_parent"
-            android:layout_height="115dp">
-
-            <ImageView
-                android:id="@+id/imageView15"
-                android:layout_width="15dp"
-                android:layout_height="21dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:src="@drawable/baker"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/CookName_carddata"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
-                android:layout_marginTop="8dp"
-                android:text="Cook Name"
-                android:textAlignment="textStart"
-                android:textColor="@color/colorTextBlack"
-                android:textSize="18dp"
-                app:layout_constraintStart_toEndOf="@+id/imageView15"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:layout_conversion_wrapHeight="100"
-                tools:layout_conversion_wrapWidth="1005" />
+            android:layout_height="match_parent">
 
             <TextView
                 android:id="@+id/menudatacard_type"
@@ -65,14 +40,14 @@
                 android:id="@+id/menudatacard_menu"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="12dp"
+                android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:text="Menu"
                 android:textAlignment="textStart"
                 android:textColor="@color/colorTextBlack"
                 android:textSize="18dp"
                 app:layout_constraintStart_toEndOf="@+id/imageView11"
-                app:layout_constraintTop_toBottomOf="@+id/CookName_carddata"
+                app:layout_constraintTop_toTopOf="parent"
                 tools:layout_conversion_wrapHeight="100"
                 tools:layout_conversion_wrapWidth="1005" />
 
@@ -90,19 +65,6 @@
                 tools:layout_conversion_wrapHeight="100"
                 tools:layout_conversion_wrapWidth="1005" />
 
-            <Button
-                android:id="@+id/menudatacard_add"
-                android:layout_width="118dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="16dp"
-                android:backgroundTint="@color/colorPrimaryDark"
-                android:text="Remove"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:layout_conversion_wrapHeight="126"
-                tools:layout_conversion_wrapWidth="310" />
-
             <ImageView
                 android:id="@+id/imageView5"
                 android:layout_width="20dp"
@@ -115,12 +77,12 @@
 
             <ImageView
                 android:id="@+id/imageView11"
-                android:layout_width="15dp"
+                android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="12dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageView15"
+                app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/menu" />
 
             <ImageView

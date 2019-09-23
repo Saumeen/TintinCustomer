@@ -4,6 +4,15 @@ public class MenuDataModel {
     private String Type;
     private String Menu;
     private String Cost;
+    private String CookName;
+
+    public String getCookName() {
+        return CookName;
+    }
+
+    public void setCookName(String cookName) {
+        CookName = cookName;
+    }
 
     public MenuDataModel() {
 
