@@ -33,7 +33,7 @@ public class MenuDataListViewHolder extends RecyclerView.ViewHolder {
         textView.setText(cost);
     }
     public void setCookName(String name){
-        TextView textView = view.findViewById(R.id.CookName_carddata);
+        TextView textView = view.findViewById(R.id.menudata_cookname);
         textView.setText(name);
     }
 }

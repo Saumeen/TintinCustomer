@@ -19,8 +19,8 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/relativeLayout2"
-            android:layout_width="match_parent"
-            android:layout_height="115dp">
+            android:layout_width="371dp"
+            android:layout_height="615dp">
 
             <ImageView
                 android:id="@+id/imageView15"
@@ -33,10 +33,10 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/CookName_carddata"
+                android:id="@+id/menudata_cookname"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
+                android:layout_marginStart="12dp"
                 android:layout_marginTop="8dp"
                 android:text="Cook Name"
                 android:textAlignment="textStart"
@@ -72,7 +72,7 @@
                 android:textColor="@color/colorTextBlack"
                 android:textSize="18dp"
                 app:layout_constraintStart_toEndOf="@+id/imageView11"
-                app:layout_constraintTop_toBottomOf="@+id/CookName_carddata"
+                app:layout_constraintTop_toBottomOf="@+id/menudata_cookname"
                 tools:layout_conversion_wrapHeight="100"
                 tools:layout_conversion_wrapWidth="1005" />
 

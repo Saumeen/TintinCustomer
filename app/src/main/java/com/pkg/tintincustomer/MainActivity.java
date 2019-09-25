@@ -1,5 +1,6 @@
 package com.pkg.tintincustomer;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Paint;
@@ -45,12 +46,14 @@ import android.view.Menu;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -68,6 +71,7 @@ public class MainActivity extends AppCompatActivity
     private TextView user_email;
     private ImageView city_image;
     private View header;
+
     String[] citydata={"Nadiad","Godhra","Vadodara","Ahmedabad","Gandhinagar","Surat","Anand"};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,6 +104,7 @@ public class MainActivity extends AppCompatActivity
             }
         });
         navigationView.setNavigationItemSelectedListener(this);
+
         searchspin = findViewById(R.id.searchspiner);
         user_email = header.findViewById(R.id.user_email);
         user_name = header.findViewById(R.id.user_name);
@@ -126,6 +131,59 @@ public class MainActivity extends AppCompatActivity
             public void onNothingSelected(AdapterView<?> parent) {
                 Toast.makeText(getApplicationContext(),"Select the City",Toast.LENGTH_LONG).show();
             }
+        });
+
+
+        user_name.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final LayoutInflater layoutInflater =LayoutInflater.from(getApplicationContext());
+                final View view = layoutInflater.inflate(R.layout.change_name,null);
+
+                final AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create();
+                alertDialog.setTitle("Enter Name Please");
+                alertDialog.setCancelable(false);
+                final EditText changename = view.findViewById(R.id.changename);
+                alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        String name = changename.getText().toString();
+                        Toast.makeText(getApplicationContext(),"Name Changed",Toast.LENGTH_LONG).show();
+                        changeName(name);
+                    }
+                });
+                alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        alertDialog.dismiss();
+                    }
+                });
+                alertDialog.setView(view);
+                alertDialog.show();
+            }
+        });
+    }
+
+    private void changeName(final String name) {
+        db.collection("CustomerUsers").whereEqualTo("PhoneNo", firebaseUser.getPhoneNumber()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                for (DocumentSnapshot documentSnapshot : task.getResult().getDocuments()) {
+                    changeNamecustomer(documentSnapshot.getId());
+                }
+            }
+
+            private void changeNamecustomer(String id) {
+                HashMap<String,Object> datamap = new HashMap<>();
+                datamap.put("Name",name);
+                db.collection("CustomerUsers").document(id).update(datamap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+
+                    }
+                });
+            }
+
         });
     }
 

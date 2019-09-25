@@ -93,7 +93,7 @@ public class CartOrderActivity extends AppCompatActivity {
               placeorder();
             }
         });
-
+        
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 // User cancelled the dialog
@@ -127,13 +127,14 @@ public class CartOrderActivity extends AppCompatActivity {
                 if(task.isSuccessful()){
                     QuerySnapshot qs = task.getResult();
                     List<DocumentSnapshot> list = qs.getDocuments();
-                    setInMap(list.get(0).getId());
+                    String address= list.get(0).getString("HomeNo")+", "+list.get(0).getString("LandMark")+", "+list.get(0).getString("State");
+                    setInMap(list.get(0).getId(),list.get(0).getString("Name"),address);
                 }
 
             }
 
 
-                private void setInMap(final String cid) {
+                private void setInMap(final String cid, final String Name, final String address) {
                     db.collection("CustomerUsers").document(cid).collection("OrderCart").get().addOnCompleteListener(
                             new OnCompleteListener<QuerySnapshot>() {
                                 @Override
@@ -154,8 +155,9 @@ public class CartOrderActivity extends AppCompatActivity {
                                                     datamap.put("Menu",ds.getString("Menu"));
                                                     datamap.put("Type",ds.getString("Type"));
                                                     datamap.put("cost",ds.getString("cost"));
-                                                    datamap.put("CutomerName",bundle.getString("Name"));
+                                                    datamap.put("CustomerName",Name);
                                                     datamap.put("MobileNO",firebaseUser.getPhoneNumber());
+                                                    datamap.put("Address",address);
 
                                                     db.collection("SupplierUsers").document(sid).collection("TiffinOrder").add(datamap).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
                                                              @Override

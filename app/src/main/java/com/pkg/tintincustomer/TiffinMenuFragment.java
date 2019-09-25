@@ -108,6 +108,7 @@ public class TiffinMenuFragment  extends Fragment {
                                                     if (task.isSuccessful()) {
                                                         QuerySnapshot qs = task.getResult();
                                                         List<DocumentSnapshot> list = qs.getDocuments();
+
                                                         addData(list.get(0).getId());
                                                     }
                                                 }
